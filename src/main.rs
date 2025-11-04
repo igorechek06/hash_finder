@@ -9,10 +9,12 @@ mod args;
 fn ends_with_hex_zeros(zeros: usize, hash: &[u8]) -> bool {
     let full_bytes = zeros / 2;
 
+    // 1. Check if the bytes at the end are zeros. Fail if not.
     if hash[hash.len() - full_bytes..].iter().any(|b| *b != 0) {
         return false;
     }
 
+    // 2. If zeros is odd, also check the half byte. Fail if not zero.
     if zeros % 2 != 0 && hash[hash.len() - full_bytes - 1] & 0x0F != 0 {
         return false;
     }
